@@ -1,0 +1,8 @@
+Name: Yash
+Surname: Kalal
+Mobile: 7385997591
+College: JSPM
+City: Pune
+GitHub: github.com/Technicalyash
+LinkedIn: https://www.linkedin.com/in/yash-kalal-71b70432a/
+WhatsApp Link: https://wa.me/917385997591?text=Hi%20Yash%20Kalal%2C%20I%20scanned%20your%20QR%20code%21

@@ -1,0 +1,64 @@
+Business Canvas
+1. Value Proposition
+
+Users create a digital portfolio by entering their details.
+Instantly generate a QR code that, when scanned, shares their portfolio and contact info.
+Easy sharing for networking, events, job fairs, and professional meetings.
+2. Customer Segments
+
+Students and job seekers.
+Professionals attending conferences.
+Colleges/universities for campus placements.
+Recruiters and HR professionals.
+3. Channels
+
+Web application (Streamlit-based).
+QR codes for offline-to-online transition.
+Social media and campus partnerships.
+4. Customer Relationships
+
+Self-service registration.
+Automated QR code generation.
+Email/SMS support for premium users.
+5. Revenue Streams
+
+Freemium Model:
+Free: Basic portfolio and QR code generation.
+Premium: Advanced features (analytics, custom branding, downloadable vCards, priority support).
+Subscription Plans:
+Monthly/Yearly for individuals.
+Bulk/Enterprise plans for colleges and recruiters.
+Advertisement:
+Display relevant ads to free users.
+Affiliate Partnerships:
+Integrate with job boards, LinkedIn, or GitHub for referral commissions.
+6. Key Activities
+
+Platform development and maintenance.
+User data management and security.
+Marketing and partnerships.
+Customer support.
+7. Key Resources
+
+Web hosting and cloud storage.
+QR code generation technology.
+Data security infrastructure.
+Development team.
+8. Key Partners
+
+Colleges and universities.
+Job boards and recruitment agencies.
+Tech communities and event organizers.
+9. Cost Structure
+
+Server and hosting costs.
+Development and maintenance.
+Marketing and customer acquisition.
+Support and operations.
+Revenue System Implementation Ideas
+Integrate Stripe or Razorpay for payment processing.
+Add a subscription management system (e.g., monthly/yearly plans).
+Use feature flags to unlock premium features for paid users.
+Track usage and analytics for enterprise clients.
+Offer branded QR codes and portfolio pages for organizations.
+If you want, I can help you design the payment/subscription logic in your code or suggest specific libraries and UI changes for monetization. Let me know your preferred revenue model or if you want a sample implementation!
