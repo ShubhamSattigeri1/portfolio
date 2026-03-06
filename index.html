@@ -1,709 +1,444 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <title>Portfolio QR Generator</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg-0: #0b1117;
-      --bg-1: #0f172a;
-      --bg-2: #111f2d;
-      --card: #111827;
-      --card-2: #0e1724;
-      --line: rgba(148, 163, 184, 0.18);
-      --text: #e5eefb;
+      --bg:    #0b1117;
+      --bg1:   #0f172a;
+      --bg2:   #111f2d;
+      --card:  #111827;
+      --card2: #0e1724;
+      --line:  rgba(148,163,184,0.18);
+      --text:  #e5eefb;
       --muted: #a6b2c7;
-      --accent: #f2a93b;
-      --accent-2: #2ed3b7;
-      --danger: #f87171;
+      --accent:#f2a93b;
+      --teal:  #2ed3b7;
+      --danger:#f87171;
     }
-    * { box-sizing: border-box; }
+
     body {
-      margin: 0;
-      font-family: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top right, #17273b 0%, transparent 50%),
-                  radial-gradient(circle at 20% 20%, #152136 0%, transparent 55%),
-                  linear-gradient(160deg, var(--bg-0), var(--bg-1) 40%, var(--bg-2));
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at top right, #17273b 0%, transparent 50%),
+        radial-gradient(circle at 20% 20%, #152136 0%, transparent 55%),
+        linear-gradient(160deg, var(--bg), var(--bg1) 40%, var(--bg2));
       color: var(--text);
       min-height: 100vh;
     }
-    .app {
-      min-height: 100vh;
-      padding: 32px 20px 52px;
-      position: relative;
-      overflow: hidden;
-    }
-    .app::before,
-    .app::after {
-      content: "";
-      position: absolute;
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      opacity: 0.28;
-      z-index: 0;
+
+    .app   { padding: 32px 20px 60px; position: relative; overflow: hidden; min-height: 100vh; }
+    .shell { max-width: 1100px; margin: 0 auto; }
+
+    .app::before, .app::after {
+      content: ""; position: absolute; width: 320px; height: 320px;
+      border-radius: 50%; opacity: .28; z-index: 0; pointer-events: none;
     }
     .app::before {
-      top: -120px;
-      right: -120px;
-      background: radial-gradient(circle, rgba(46, 211, 183, 0.45) 0%, rgba(46, 211, 183, 0) 70%);
+      top: -120px; right: -120px;
+      background: radial-gradient(circle, rgba(46,211,183,.45) 0%, transparent 70%);
       animation: float 10s ease-in-out infinite;
     }
     .app::after {
-      bottom: -150px;
-      left: -120px;
-      background: radial-gradient(circle, rgba(242, 169, 59, 0.45) 0%, rgba(242, 169, 59, 0) 70%);
-      animation: float 12s ease-in-out infinite;
+      bottom: -150px; left: -120px;
+      background: radial-gradient(circle, rgba(242,169,59,.45) 0%, transparent 70%);
+      animation: float 12s ease-in-out infinite reverse;
     }
     @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(18px); }
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(18px); }
     }
-    .shell {
-      max-width: 1120px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
+
+    /* Hero */
     .hero {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 24px;
-      align-items: center;
-      margin-bottom: 28px;
+      display: grid; grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px; align-items: center; margin-bottom: 28px;
+      position: relative; z-index: 1;
     }
-    .hero .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      background: rgba(46, 211, 183, 0.12);
-      border: 1px solid rgba(46, 211, 183, 0.35);
-      color: #c8fff2;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 5px 14px; border-radius: 999px;
+      background: rgba(46,211,183,.12); border: 1px solid rgba(46,211,183,.35);
+      color: #c8fff2; font-size: .78rem; text-transform: uppercase; letter-spacing: .12em;
     }
     .hero h1 {
-      font-family: "Playfair Display", "Times New Roman", serif;
-      font-weight: 700;
-      font-size: clamp(2.1rem, 3.8vw, 3.4rem);
-      margin: 16px 0 12px;
-      line-height: 1.05;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(2rem,3.8vw,3.2rem); line-height: 1.06; margin: 14px 0 10px;
     }
-    .hero p {
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 520px;
-      margin: 0 0 16px;
-    }
-    .step-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+    .hero p { color: var(--muted); font-size: 1rem; max-width: 500px; margin-bottom: 14px; }
+    .step-row { display: flex; flex-wrap: wrap; gap: 10px; }
     .step {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--line);
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-size: 0.9rem;
-      color: var(--text);
+      background: rgba(255,255,255,.06); border: 1px solid var(--line);
+      padding: 8px 14px; border-radius: 12px; font-size: .88rem;
     }
     .hero-card {
-      background: linear-gradient(140deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 18px;
-      padding: 18px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 18px 40px rgba(7, 12, 20, 0.5);
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 18px; padding: 20px; box-shadow: 0 18px 40px rgba(7,12,20,.5);
+      position: relative; overflow: hidden;
     }
     .hero-card::after {
-      content: "";
-      position: absolute;
-      top: -30%;
-      right: -20%;
-      width: 220px;
-      height: 220px;
-      background: radial-gradient(circle, rgba(46, 211, 183, 0.35) 0%, transparent 70%);
+      content: ""; position: absolute; top: -30%; right: -20%;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(46,211,183,.3) 0%, transparent 70%);
+      pointer-events: none;
     }
-    .hero-card h3 {
-      margin: 0 0 12px;
-      font-size: 1.1rem;
+    .hero-card h3 { font-size: 1.05rem; margin-bottom: 14px; }
+    .stat-row { display: flex; justify-content: space-between; color: var(--muted); font-size: .9rem; margin-bottom: 8px; }
+    .tagline { color: var(--muted); font-size: .85rem; margin-top: 10px; }
+
+    /* Main grid */
+    .main-grid {
+      display: grid; grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px; position: relative; z-index: 1;
     }
-    .hero-card .stat {
-      display: flex;
-      justify-content: space-between;
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 8px;
+
+    /* Panels */
+    .panel {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 20px; padding: 24px;
+      box-shadow: 0 16px 30px rgba(4,9,16,.35);
     }
-    .content {
-      animation: fadeUp 0.6s ease both;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 20px;
-    }
-    .panel, .side-panel {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 22px;
-      box-shadow: 0 16px 30px rgba(4, 9, 16, 0.35);
-    }
-    .panel h2, .side-panel h2 {
-      margin: 0 0 12px;
-      font-size: 1.4rem;
-    }
-    .panel p {
-      color: var(--muted);
-      margin: 0 0 18px;
-    }
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .field span {
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
+    .panel h2 { font-size: 1.35rem; margin-bottom: 6px; }
+    .panel > p { color: var(--muted); font-size: .92rem; margin-bottom: 18px; }
+
+    /* Form */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field.wide { grid-column: span 2; }
+    .field label { font-size: .83rem; color: var(--muted); }
     .field input {
-      background: var(--card-2);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 12px 14px;
-      color: var(--text);
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      background: var(--card2); border: 1px solid var(--line);
+      border-radius: 12px; padding: 11px 14px;
+      color: var(--text); font-size: .94rem; font-family: inherit;
+      outline: none; width: 100%;
+      transition: border-color .2s, box-shadow .2s;
     }
     .field input:focus {
-      border-color: rgba(46, 211, 183, 0.6);
-      box-shadow: 0 0 0 3px rgba(46, 211, 183, 0.15);
+      border-color: rgba(46,211,183,.6);
+      box-shadow: 0 0 0 3px rgba(46,211,183,.15);
     }
-    .field .error {
-      color: var(--danger);
-      font-size: 0.8rem;
+    .field input.err { border-color: var(--danger); }
+    .field .errmsg { color: var(--danger); font-size: .78rem; min-height: 1em; }
+
+    /* Buttons */
+    .btn {
+      border: none; border-radius: 14px; padding: 12px 20px;
+      font-size: .95rem; font-weight: 700; font-family: inherit;
+      cursor: pointer; display: inline-flex; align-items: center;
+      justify-content: center; gap: 8px; text-decoration: none;
+      transition: opacity .15s, transform .15s;
     }
-    .wide {
-      grid-column: span 2;
-    }
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 16px;
-    }
-    button, .btn {
-      border: none;
-      border-radius: 14px;
-      padding: 12px 18px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    button.primary, .btn.primary {
-      background: linear-gradient(135deg, var(--accent), #f5c56c);
-      color: #2f1b00;
-      box-shadow: 0 12px 20px rgba(242, 169, 59, 0.2);
-    }
-    button.secondary, .btn.secondary {
-      background: rgba(46, 211, 183, 0.18);
-      color: #d9fff7;
-      border: 1px solid rgba(46, 211, 183, 0.35);
-    }
-    button.ghost, .btn.ghost {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--line);
-    }
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-    .qr-panel {
-      margin-top: 16px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px dashed var(--line);
-      border-radius: 18px;
-      padding: 18px;
-      text-align: center;
-    }
-    .qr-panel img {
-      width: 220px;
-      height: 220px;
-      border-radius: 14px;
-      background: #fff;
-      padding: 10px;
-    }
-    .qr-actions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-top: 12px;
-    }
-    .note {
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 10px;
-    }
-    .link-box {
-      margin-top: 10px;
-      padding: 10px 12px;
-      background: rgba(11, 19, 32, 0.8);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      color: var(--muted);
-      font-size: 0.8rem;
-      word-break: break-all;
-    }
+    .btn:disabled { opacity: .55; cursor: not-allowed; }
+    .btn-primary   { background: linear-gradient(135deg,var(--accent),#f5c56c); color: #2f1b00; box-shadow: 0 10px 20px rgba(242,169,59,.22); }
+    .btn-secondary { background: rgba(46,211,183,.18); color: #d9fff7; border: 1px solid rgba(46,211,183,.35); }
+    .btn-ghost     { background: transparent; color: var(--text); border: 1px solid var(--line); }
+    .btn:hover:not(:disabled) { transform: translateY(-1px); opacity: .9; }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+
+    /* Preview */
     .preview-card {
-      border-radius: 18px;
-      padding: 18px;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid var(--line);
-      margin-bottom: 18px;
+      border-radius: 16px; padding: 16px;
+      background: rgba(15,23,42,.8); border: 1px solid var(--line);
+      margin-bottom: 16px;
     }
-    .preview-card h3 {
-      margin: 0 0 8px;
-      font-size: 1.2rem;
+    .preview-card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+    .preview-item { color: var(--muted); font-size: .88rem; margin-bottom: 5px; }
+
+    .qr-box {
+      background: rgba(255,255,255,.04); border: 1px dashed var(--line);
+      border-radius: 18px; padding: 18px; text-align: center;
     }
-    .preview-item {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 6px;
+    .qr-box img { width: 200px; height: 200px; border-radius: 12px; background: #fff; padding: 8px; }
+    .qr-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+    .qr-actions .btn { width: 100%; }
+
+    .link-box {
+      margin-top: 10px; padding: 8px 12px;
+      background: rgba(11,19,32,.8); border: 1px solid var(--line);
+      border-radius: 10px; color: var(--muted);
+      font-size: .75rem; word-break: break-all; text-align: left;
     }
+    .note { color: var(--muted); font-size: .83rem; margin-top: 10px; }
+
+    /* Profile view */
+    #profile-view { display: none; position: relative; z-index: 1; }
     .profile-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 24px;
-      box-shadow: 0 20px 40px rgba(6, 10, 18, 0.45);
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 22px; padding: 28px; max-width: 540px;
+      box-shadow: 0 20px 40px rgba(6,10,18,.45);
     }
-    .profile-card h2 {
-      margin: 0 0 12px;
-      font-size: 1.8rem;
-    }
-    .profile-field {
-      margin-bottom: 10px;
-      color: var(--muted);
-    }
-    .profile-field a {
-      color: #9fe8db;
-      text-decoration: none;
-    }
-    .profile-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 18px;
-    }
-    .tagline {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-top: 8px;
-    }
-    @media (max-width: 980px) {
-      .hero, .grid {
-        grid-template-columns: 1fr;
-      }
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-      .wide {
-        grid-column: span 1;
-      }
+    .profile-card h2 { font-size: 1.9rem; margin-bottom: 16px; }
+    .profile-field { color: var(--muted); margin-bottom: 10px; font-size: .95rem; }
+    .profile-field a { color: #9fe8db; text-decoration: none; }
+    .profile-field a:hover { text-decoration: underline; }
+    .profile-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+
+    #status { color: var(--muted); font-size: .85rem; margin-top: 12px; min-height: 1.2em; }
+
+    @media (max-width: 900px) {
+      .hero, .main-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.wide { grid-column: span 1; }
     }
   </style>
 </head>
 <body>
-  <div id="root"></div>
+<div class="app">
+  <div class="shell">
 
-  <script>
-    // Optional: set to your deployed base URL, e.g. "https://yourapp.example"
-    const BASE_URL = "";
-  </script>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <script type="text/babel">
-    const { useMemo, useState } = React;
-
-    const EMPTY_FORM = {
-      name: "",
-      surname: "",
-      mobile: "",
-      college: "",
-      city: "",
-      github: "",
-      linkedin: ""
-    };
-
-    function resolveBaseUrl() {
-      if (BASE_URL && BASE_URL.length > 0) {
-        return BASE_URL.replace(/\\/$/, "");
-      }
-      if (window.location.origin === "null") {
-        return window.location.href.split("?")[0].split("#")[0].replace(/\\/$/, "");
-      }
-      return (window.location.origin + window.location.pathname).replace(/\\/$/, "");
-    }
-
-    function readProfileFromQuery() {
-      const params = new URLSearchParams(window.location.search);
-      const getValue = (key) => params.get(key) || "";
-      return {
-        name: getValue("name"),
-        surname: getValue("surname"),
-        mobile: getValue("mobile"),
-        college: getValue("college"),
-        city: getValue("city"),
-        github: getValue("github"),
-        linkedin: getValue("linkedin")
-      };
-    }
-
-    function normalizeUrl(value) {
-      if (!value) return "";
-      if (/^https?:\\/\\//i.test(value)) return value;
-      return "https://" + value;
-    }
-
-    function isValidUrl(value) {
-      try {
-        new URL(value);
-        return true;
-      } catch (err) {
-        return false;
-      }
-    }
-
-    function App() {
-      const initialProfile = readProfileFromQuery();
-      const hasProfile = initialProfile.name && initialProfile.name.length > 0;
-
-      return (
-        <div className="app">
-          <div className="shell">
-            <header className="hero">
-              <div>
-                <div className="pill">Portfolio QR</div>
-                <h1>Share your profile in one scan.</h1>
-                <p>Everything lives inside the QR link. No database, no storage.</p>
-                <div className="step-row">
-                  <div className="step">1. Add details</div>
-                  <div className="step">2. Generate QR</div>
-                  <div className="step">3. Share anywhere</div>
-                </div>
-              </div>
-              <div className="hero-card">
-                <h3>Quick snapshot</h3>
-                <div className="stat"><span>Fields</span><strong>7</strong></div>
-                <div className="stat"><span>Storage</span><strong>None</strong></div>
-                <div className="stat"><span>Works on</span><strong>Any phone</strong></div>
-                <div className="tagline">Generated links open a clean profile view instantly.</div>
-              </div>
-            </header>
-
-            {hasProfile ? <ProfileView data={initialProfile} /> : <RegisterView />}
-          </div>
+    <!-- Hero -->
+    <header class="hero">
+      <div>
+        <div class="pill">Portfolio QR</div>
+        <h1>Share your profile<br>in one scan.</h1>
+        <p>Everything lives inside the QR link. No database, no storage.</p>
+        <div class="step-row">
+          <div class="step">1. Add details</div>
+          <div class="step">2. Generate QR</div>
+          <div class="step">3. Share anywhere</div>
         </div>
-      );
-    }
+      </div>
+      <div class="hero-card">
+        <h3>Quick snapshot</h3>
+        <div class="stat-row"><span>Fields</span><strong>7</strong></div>
+        <div class="stat-row"><span>Storage</span><strong>None</strong></div>
+        <div class="stat-row"><span>Works on</span><strong>Any phone</strong></div>
+        <div class="tagline">Generated links open a clean profile view instantly.</div>
+      </div>
+    </header>
 
-    function RegisterView() {
-      const [form, setForm] = useState(EMPTY_FORM);
-      const [errors, setErrors] = useState({});
-      const [qrDataUrl, setQrDataUrl] = useState("");
-      const [profileUrl, setProfileUrl] = useState("");
-      const [status, setStatus] = useState("");
-      const [busy, setBusy] = useState(false);
+    <!-- FORM VIEW -->
+    <div id="form-view">
+      <div class="main-grid">
 
-      const preview = useMemo(() => ({
-        name: form.name || "Your name",
-        surname: form.surname || "",
-        mobile: form.mobile || "10 digit mobile",
-        college: form.college || "College",
-        city: form.city || "City",
-        github: form.github || "github.com/username",
-        linkedin: form.linkedin || "linkedin.com/in/username"
-      }), [form]);
+        <div class="panel">
+          <h2>Generate your QR</h2>
+          <p>Fill the form once. The QR will open your profile on any device.</p>
 
-      function updateField(field, value) {
-        setForm((prev) => ({ ...prev, [field]: value }));
-      }
-
-      function validate(data) {
-        const next = {};
-        Object.entries(data).forEach(([key, value]) => {
-          if (!value || !value.trim()) {
-            next[key] = "Required field";
-          }
-        });
-        if (data.mobile && !/^\\d{10}$/.test(data.mobile.trim())) {
-          next.mobile = "Mobile must be exactly 10 digits";
-        }
-        if (data.github) {
-          const gh = normalizeUrl(data.github.trim());
-          if (!isValidUrl(gh)) {
-            next.github = "Enter a valid URL";
-          }
-        }
-        if (data.linkedin) {
-          const li = normalizeUrl(data.linkedin.trim());
-          if (!isValidUrl(li)) {
-            next.linkedin = "Enter a valid URL";
-          }
-        }
-        return next;
-      }
-
-      async function handleGenerate(event) {
-        event.preventDefault();
-        setStatus("");
-        const trimmed = {
-          name: form.name.trim(),
-          surname: form.surname.trim(),
-          mobile: form.mobile.trim(),
-          college: form.college.trim(),
-          city: form.city.trim(),
-          github: normalizeUrl(form.github.trim()),
-          linkedin: normalizeUrl(form.linkedin.trim())
-        };
-        const nextErrors = validate(trimmed);
-        setErrors(nextErrors);
-        if (Object.keys(nextErrors).length > 0) {
-          setStatus("Please fix the highlighted fields.");
-          return;
-        }
-
-        const baseUrl = resolveBaseUrl();
-        const params = new URLSearchParams(trimmed).toString();
-        const separator = baseUrl.includes("?") ? "&" : "?";
-        const fullUrl = baseUrl + separator + params;
-
-        setBusy(true);
-        try {
-          const dataUrl = await QRCode.toDataURL(fullUrl, {
-            width: 240,
-            margin: 1,
-            color: { dark: "#0b1117", light: "#ffffff" }
-          });
-          setProfileUrl(fullUrl);
-          setQrDataUrl(dataUrl);
-          setStatus("QR ready. Share the link or download the code.");
-        } catch (err) {
-          setStatus("Could not generate QR. Please try again.");
-        } finally {
-          setBusy(false);
-        }
-      }
-
-      async function handleCopy() {
-        if (!profileUrl) return;
-        try {
-          await navigator.clipboard.writeText(profileUrl);
-          setStatus("Profile link copied to clipboard.");
-        } catch (err) {
-          setStatus("Copy failed. You can select and copy the link manually.");
-        }
-      }
-
-      return (
-        <section className="content grid">
-          <form className="panel" onSubmit={handleGenerate}>
-            <h2>Generate your QR</h2>
-            <p>Fill the form once. The QR will open your profile on any device.</p>
-
-            <div className="form-grid">
-              <label className="field">
-                <span>First name</span>
-                <input
-                  value={form.name}
-                  onChange={(e) => updateField("name", e.target.value)}
-                  placeholder="Ayesha"
-                />
-                {errors.name && <div className="error">{errors.name}</div>}
-              </label>
-              <label className="field">
-                <span>Surname</span>
-                <input
-                  value={form.surname}
-                  onChange={(e) => updateField("surname", e.target.value)}
-                  placeholder="Khan"
-                />
-                {errors.surname && <div className="error">{errors.surname}</div>}
-              </label>
-              <label className="field">
-                <span>Mobile number</span>
-                <input
-                  value={form.mobile}
-                  onChange={(e) => updateField("mobile", e.target.value)}
-                  placeholder="9876543210"
-                  inputMode="numeric"
-                />
-                {errors.mobile && <div className="error">{errors.mobile}</div>}
-              </label>
-              <label className="field">
-                <span>College</span>
-                <input
-                  value={form.college}
-                  onChange={(e) => updateField("college", e.target.value)}
-                  placeholder="Institute of Technology"
-                />
-                {errors.college && <div className="error">{errors.college}</div>}
-              </label>
-              <label className="field">
-                <span>City</span>
-                <input
-                  value={form.city}
-                  onChange={(e) => updateField("city", e.target.value)}
-                  placeholder="Delhi"
-                />
-                {errors.city && <div className="error">{errors.city}</div>}
-              </label>
-              <label className="field wide">
-                <span>GitHub profile URL</span>
-                <input
-                  value={form.github}
-                  onChange={(e) => updateField("github", e.target.value)}
-                  placeholder="github.com/username"
-                />
-                {errors.github && <div className="error">{errors.github}</div>}
-              </label>
-              <label className="field wide">
-                <span>LinkedIn profile URL</span>
-                <input
-                  value={form.linkedin}
-                  onChange={(e) => updateField("linkedin", e.target.value)}
-                  placeholder="linkedin.com/in/username"
-                />
-                {errors.linkedin && <div className="error">{errors.linkedin}</div>}
-              </label>
+          <div class="form-grid">
+            <div class="field">
+              <label for="f-name">First name</label>
+              <input id="f-name" placeholder="Ayesha" oninput="livePreview()" />
+              <span class="errmsg" id="e-name"></span>
             </div>
-
-            <div className="actions">
-              <button className="primary" type="submit" disabled={busy}>
-                {busy ? "Generating..." : "Generate QR"}
-              </button>
-              <button
-                className="ghost"
-                type="button"
-                onClick={() => {
-                  setForm(EMPTY_FORM);
-                  setErrors({});
-                  setQrDataUrl("");
-                  setProfileUrl("");
-                  setStatus("");
-                }}
-              >
-                Reset
-              </button>
+            <div class="field">
+              <label for="f-surname">Surname</label>
+              <input id="f-surname" placeholder="Khan" oninput="livePreview()" />
+              <span class="errmsg" id="e-surname"></span>
             </div>
-            {status && <div className="note">{status}</div>}
-          </form>
-
-          <div className="side-panel">
-            <h2>Live preview</h2>
-            <div className="preview-card">
-              <h3>{preview.name} {preview.surname}</h3>
-              <div className="preview-item">Mobile: {preview.mobile}</div>
-              <div className="preview-item">College: {preview.college}</div>
-              <div className="preview-item">City: {preview.city}</div>
-              <div className="preview-item">GitHub: {preview.github}</div>
-              <div className="preview-item">LinkedIn: {preview.linkedin}</div>
+            <div class="field">
+              <label for="f-mobile">Mobile number</label>
+              <input id="f-mobile" placeholder="9876543210" inputmode="numeric" oninput="livePreview()" />
+              <span class="errmsg" id="e-mobile"></span>
             </div>
-
-            <div className="qr-panel">
-              {qrDataUrl ? (
-                <>
-                  <img src={qrDataUrl} alt="QR code" />
-                  <div className="qr-actions">
-                    <button className="secondary" type="button" onClick={handleCopy}>Copy profile link</button>
-                    <a className="btn ghost" href={qrDataUrl} download="portfolio-qr.png">Download QR</a>
-                    <a className="btn ghost" href={profileUrl} target="_blank" rel="noreferrer">Open profile</a>
-                  </div>
-                  <div className="link-box">{profileUrl}</div>
-                </>
-              ) : (
-                <div className="note">Your QR will appear here after generation.</div>
-              )}
+            <div class="field">
+              <label for="f-college">College</label>
+              <input id="f-college" placeholder="Institute of Technology" oninput="livePreview()" />
+              <span class="errmsg" id="e-college"></span>
             </div>
-            <div className="note">Tip: share the QR or link in your resume, ID card, or portfolio page.</div>
+            <div class="field">
+              <label for="f-city">City</label>
+              <input id="f-city" placeholder="Delhi" oninput="livePreview()" />
+              <span class="errmsg" id="e-city"></span>
+            </div>
+            <div class="field wide">
+              <label for="f-github">GitHub profile URL</label>
+              <input id="f-github" placeholder="github.com/username" oninput="livePreview()" />
+              <span class="errmsg" id="e-github"></span>
+            </div>
+            <div class="field wide">
+              <label for="f-linkedin">LinkedIn profile URL</label>
+              <input id="f-linkedin" placeholder="linkedin.com/in/username" oninput="livePreview()" />
+              <span class="errmsg" id="e-linkedin"></span>
+            </div>
           </div>
-        </section>
-      );
-    }
 
-    function ProfileView({ data }) {
-      const profile = {
-        name: data.name || "",
-        surname: data.surname || "",
-        mobile: data.mobile || "",
-        college: data.college || "",
-        city: data.city || "",
-        github: normalizeUrl(data.github || ""),
-        linkedin: normalizeUrl(data.linkedin || "")
+          <div class="actions">
+            <button class="btn btn-primary" onclick="generate()">Generate QR</button>
+            <button class="btn btn-ghost"   onclick="resetAll()">Reset</button>
+          </div>
+          <div id="status"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Live preview</h2>
+          <div class="preview-card">
+            <h3 id="prev-name">Your name</h3>
+            <div class="preview-item" id="prev-mobile">Mobile: —</div>
+            <div class="preview-item" id="prev-college">College: —</div>
+            <div class="preview-item" id="prev-city">City: —</div>
+            <div class="preview-item" id="prev-github">GitHub: —</div>
+            <div class="preview-item" id="prev-linkedin">LinkedIn: —</div>
+          </div>
+
+          <div class="qr-box">
+            <div class="note" id="qr-placeholder">Your QR will appear here after generation.</div>
+            <div id="qr-result" style="display:none">
+              <img id="qr-img" src="" alt="QR code" />
+              <div class="qr-actions">
+                <button class="btn btn-secondary" onclick="showProfile()">Preview profile page</button>
+                <a class="btn btn-ghost" id="qr-download" download="portfolio-qr.png">Download QR</a>
+                <a class="btn btn-ghost" id="qr-open" target="_blank" rel="noreferrer">Open profile URL</a>
+              </div>
+              <div class="link-box" id="qr-link"></div>
+            </div>
+          </div>
+          <div class="note">Tip: share the QR or link in your resume, ID card, or portfolio page.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PROFILE VIEW -->
+    <div id="profile-view">
+      <div class="profile-card">
+        <h2 id="pv-name"></h2>
+        <div class="profile-field" id="pv-mobile"></div>
+        <div class="profile-field" id="pv-college"></div>
+        <div class="profile-field" id="pv-city"></div>
+        <div class="profile-field" id="pv-github"></div>
+        <div class="profile-field" id="pv-linkedin"></div>
+        <div class="profile-actions">
+          <a class="btn btn-primary" id="pv-wa" target="_blank" rel="noreferrer">WhatsApp me</a>
+          <button class="btn btn-ghost" onclick="backToForm()">&#8592; Back</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const BASE_URL = "https://portfolio-qr-code-generator.vercel.app";
+  const FIELDS   = ["name","surname","mobile","college","city","github","linkedin"];
+
+  function val(id) { return document.getElementById("f-" + id).value.trim(); }
+  function $id(id) { return document.getElementById(id); }
+
+  function normalizeUrl(v) {
+    if (!v) return "";
+    return /^https?:\/\//i.test(v) ? v : "https://" + v;
+  }
+  function isValidUrl(v) {
+    try { new URL(v); return true; } catch { return false; }
+  }
+
+  function livePreview() {
+    $id("prev-name").textContent     = (val("name") || "Your name") + (val("surname") ? " " + val("surname") : "");
+    $id("prev-mobile").textContent   = "Mobile: "   + (val("mobile")   || "—");
+    $id("prev-college").textContent  = "College: "  + (val("college")  || "—");
+    $id("prev-city").textContent     = "City: "     + (val("city")     || "—");
+    $id("prev-github").textContent   = "GitHub: "   + (val("github")   || "github.com/username");
+    $id("prev-linkedin").textContent = "LinkedIn: " + (val("linkedin") || "linkedin.com/in/username");
+  }
+
+  function clearErrors() {
+    FIELDS.forEach(f => {
+      $id("e-" + f).textContent = "";
+      $id("f-" + f).classList.remove("err");
+    });
+  }
+  function setError(f, msg) {
+    $id("e-" + f).textContent = msg;
+    $id("f-" + f).classList.add("err");
+  }
+
+  function validate() {
+    clearErrors();
+    let ok = true;
+    FIELDS.forEach(f => { if (!val(f)) { setError(f, "Required"); ok = false; } });
+    if (val("mobile") && !/^\d{10}$/.test(val("mobile")))      { setError("mobile", "Must be exactly 10 digits"); ok = false; }
+    if (val("github")  && !isValidUrl(normalizeUrl(val("github"))))  { setError("github",  "Enter a valid URL"); ok = false; }
+    if (val("linkedin")&& !isValidUrl(normalizeUrl(val("linkedin")))){ setError("linkedin","Enter a valid URL"); ok = false; }
+    return ok;
+  }
+
+  function generate() {
+    setStatus("");
+    if (!validate()) { setStatus("Please fix the highlighted fields."); return; }
+
+    const data = {
+      name:     val("name"),
+      surname:  val("surname"),
+      mobile:   val("mobile"),
+      college:  val("college"),
+      city:     val("city"),
+      github:   normalizeUrl(val("github")),
+      linkedin: normalizeUrl(val("linkedin"))
+    };
+    const fullUrl = BASE_URL + "?" + new URLSearchParams(data).toString();
+    const qrUrl   = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&bgcolor=ffffff&color=0b1117&data=" + encodeURIComponent(fullUrl);
+
+    $id("qr-img").src             = qrUrl;
+    $id("qr-download").href       = qrUrl;
+    $id("qr-open").href           = fullUrl;
+    $id("qr-link").textContent    = fullUrl;
+    $id("qr-placeholder").style.display = "none";
+    $id("qr-result").style.display      = "block";
+
+    window._pd = data;
+    setStatus("QR ready! Share the link or download the code.");
+  }
+
+  function resetAll() {
+    FIELDS.forEach(f => { $id("f-" + f).value = ""; });
+    clearErrors();
+    $id("qr-placeholder").style.display = "block";
+    $id("qr-result").style.display      = "none";
+    setStatus("");
+    livePreview();
+  }
+
+  function setStatus(msg) { $id("status").textContent = msg; }
+
+  function showProfile() {
+    const d = window._pd; if (!d) return;
+    populateProfile(d);
+    $id("form-view").style.display    = "none";
+    $id("profile-view").style.display = "block";
+  }
+
+  function backToForm() {
+    $id("profile-view").style.display = "none";
+    $id("form-view").style.display    = "block";
+  }
+
+  function populateProfile(d) {
+    const gh = normalizeUrl(d.github);
+    const li = normalizeUrl(d.linkedin);
+    const wa = "https://wa.me/91" + d.mobile + "?text=" + encodeURIComponent("Hi " + d.name + " " + d.surname + ", I scanned your QR!");
+    $id("pv-name").textContent    = d.name + " " + d.surname;
+    $id("pv-mobile").textContent  = "📱 " + d.mobile;
+    $id("pv-college").textContent = "🏫 " + d.college;
+    $id("pv-city").textContent    = "📍 " + d.city;
+    $id("pv-github").innerHTML    = '🐙 <a href="' + gh + '" target="_blank" rel="noreferrer">' + gh + '</a>';
+    $id("pv-linkedin").innerHTML  = '💼 <a href="' + li + '" target="_blank" rel="noreferrer">' + li + '</a>';
+    $id("pv-wa").href             = wa;
+  }
+
+  // Auto-detect profile from URL query string
+  (function () {
+    const p = new URLSearchParams(window.location.search);
+    if (p.get("name")) {
+      const d = {
+        name: p.get("name") || "", surname: p.get("surname") || "",
+        mobile: p.get("mobile") || "", college: p.get("college") || "",
+        city: p.get("city") || "",
+        github:   normalizeUrl(p.get("github")   || ""),
+        linkedin: normalizeUrl(p.get("linkedin") || "")
       };
-
-      const waMessage = encodeURIComponent("Hi " + profile.name + " " + profile.surname + ", I scanned your QR code!");
-      const waLink = "https://wa.me/91" + profile.mobile + "?text=" + waMessage;
-
-      function handleEdit() {
-        const baseUrl = resolveBaseUrl();
-        window.location.href = baseUrl;
-      }
-
-      return (
-        <section className="content">
-          <div className="profile-card">
-            <h2>{profile.name} {profile.surname}</h2>
-            <div className="profile-field">Mobile: {profile.mobile}</div>
-            <div className="profile-field">College: {profile.college}</div>
-            <div className="profile-field">City: {profile.city}</div>
-            <div className="profile-field">
-              GitHub: <a href={profile.github} target="_blank" rel="noreferrer">{profile.github}</a>
-            </div>
-            <div className="profile-field">
-              LinkedIn: <a href={profile.linkedin} target="_blank" rel="noreferrer">{profile.linkedin}</a>
-            </div>
-
-            <div className="profile-actions">
-              <a className="btn primary" href={waLink} target="_blank" rel="noreferrer">WhatsApp me</a>
-              <button className="ghost" type="button" onClick={handleEdit}>Create another QR</button>
-            </div>
-          </div>
-        </section>
-      );
+      window._pd = d;
+      populateProfile(d);
+      $id("form-view").style.display    = "none";
+      $id("profile-view").style.display = "block";
     }
-
-    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-  </script>
+  })();
+</script>
 </body>
 </html>
