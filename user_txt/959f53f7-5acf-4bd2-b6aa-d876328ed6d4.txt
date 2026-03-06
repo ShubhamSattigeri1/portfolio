@@ -1,8 +1,0 @@
-Name: kususmlata 
-Surname: pawar
-Mobile: 9175196455
-College: jspm
-City: pune
-GitHub: asd
-LinkedIn: ccc
-WhatsApp Link: https://wa.me/919175196455?text=Hi%20kususmlata%20%20pawar%2C%20I%20scanned%20your%20QR%20code%21

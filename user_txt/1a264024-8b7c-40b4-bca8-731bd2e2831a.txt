@@ -1,8 +1,0 @@
-Name: Shubham 
-Surname: Sattigeri
-Mobile: 8208724456
-College: JSPM's RSCOE
-City: Pune
-GitHub: https://github.com/
-LinkedIn: https://www.linkedin.com/in/shubham-sattigeri-116787323/
-WhatsApp Link: https://wa.me/918208724456?text=Hi%20Shubham%20%20Sattigeri%2C%20I%20scanned%20your%20QR%20code%21
