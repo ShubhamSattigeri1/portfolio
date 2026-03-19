@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Practical guides for resumes, portfolio QR codes, GitHub profiles, LinkedIn improvements, and project presentation."
+  />
+  <title>Guides | Portfolio QR Generator</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #0b1117, #101b2a);
+      color: #e8eef7;
+      line-height: 1.7;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 32px 18px 60px; }
+    .nav, .grid { display: flex; flex-wrap: wrap; gap: 14px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .card {
+      background: rgba(17, 24, 39, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .nav { margin-bottom: 18px; }
+    .nav a, a { color: #9fe8db; text-decoration: none; }
+    .nav a:hover, a:hover { text-decoration: underline; }
+    h1, h2, h3 { margin-top: 0; }
+    p, li { color: #b7c2d5; }
+    ul { padding-left: 20px; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-of-service.html">Terms of Service</a>
+    </nav>
+
+    <section class="card">
+      <h1>Guides and resources</h1>
+      <p>
+        This page collects practical articles for students, job seekers, and early-career developers who want to improve how they present themselves online.
+        The goal is to make the site useful even when a visitor is not using the generator immediately.
+      </p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>How to use a QR code on a resume</h2>
+        <p>Understand placement, destination links, and the difference between a helpful QR code and a distracting one.</p>
+        <p><a href="resume-qr-tips.html">Read article</a></p>
+      </article>
+      <article class="card">
+        <h2>GitHub profile checklist for beginners</h2>
+        <p>Improve your profile so visitors can quickly understand what you build, how active you are, and where to start reading.</p>
+        <p><a href="github-profile-checklist.html">Read article</a></p>
+      </article>
+      <article class="card">
+        <h2>LinkedIn improvements for students</h2>
+        <p>Strengthen your headline, summary, and project visibility so recruiters can understand your direction faster.</p>
+        <p><a href="linkedin-for-students.html">Read article</a></p>
+      </article>
+      <article class="card">
+        <h2>How to present projects clearly</h2>
+        <p>Learn how to write short project explanations that show relevance, impact, and technical thinking without sounding inflated.</p>
+        <p><a href="project-showcase-tips.html">Read article</a></p>
+      </article>
+    </section>
+
+    <section class="card">
+      <p>
+        For site policies and ownership details, visit the <a href="about.html">About</a>, <a href="contact.html">Contact</a>,
+        <a href="privacy-policy.html">Privacy Policy</a>, and <a href="terms-of-service.html">Terms of Service</a> pages.
+      </p>
+    </section>
+  </div>
+</body>
+</html>

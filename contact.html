@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Contact Portfolio QR Generator for site feedback, privacy questions, or report an issue with the QR portfolio tool."
+  />
+  <title>Contact Portfolio QR Generator | Support and Feedback</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --bg: #0b1117;
+      --bg2: #101b2a;
+      --card: rgba(17, 24, 39, 0.92);
+      --line: rgba(148, 163, 184, 0.18);
+      --text: #e8eef7;
+      --muted: #b7c2d5;
+      --link: #9fe8db;
+      --field: rgba(8, 13, 22, 0.7);
+    }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg), var(--bg2));
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 32px 18px 60px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .nav, .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .nav { margin-bottom: 18px; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1, h2 { margin-top: 0; }
+    p, li, label { color: var(--muted); }
+    ul { padding-left: 20px; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.wide { grid-column: 1 / -1; }
+    input, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--field);
+      color: var(--text);
+      font: inherit;
+    }
+    textarea { min-height: 140px; resize: vertical; }
+    .btn {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      background: #9fe8db;
+      color: #06251f;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    @media (max-width: 720px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="guides.html">Guides</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-of-service.html">Terms of Service</a>
+    </nav>
+
+    <section class="card">
+      <h1>Contact</h1>
+      <p>
+        This page helps visitors reach the site owner with questions about the tool, report broken links, flag privacy concerns, or suggest new educational content.
+        Clear contact details are also an important trust signal for publisher-quality websites.
+      </p>
+      <p>
+        You can email <a href="mailto:hello@example.com">hello@example.com</a> directly, or use the prepared mail link below after filling out the form.
+      </p>
+
+      <form action="mailto:hello@example.com" method="post" enctype="text/plain">
+        <div class="form-grid">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" />
+          </div>
+          <div class="field">
+            <label for="email">Your email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" />
+          </div>
+          <div class="field wide">
+            <label for="subject">Subject</label>
+            <input id="subject" name="subject" type="text" placeholder="Feedback, support, privacy question" />
+          </div>
+          <div class="field wide">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Share your feedback or question here."></textarea>
+          </div>
+        </div>
+        <button class="btn" type="submit">Send Email</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Good reasons to reach out</h2>
+      <ul>
+        <li>You found a broken QR generation flow or a bad external link.</li>
+        <li>You have a privacy or policy question about how the generator works.</li>
+        <li>You want to suggest a new guide for students, developers, or job seekers.</li>
+        <li>You noticed confusing content that should be corrected for visitors.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Public information reminder</h2>
+      <p>
+        This site is built for public-facing portfolio details only. Please do not include passwords, government IDs, full home addresses, or any sensitive personal information
+        in messages or generated profile links.
+      </p>
+    </section>
+
+    <section class="card">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="guides.html">Guides</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-service.html">Terms of Service</a>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
