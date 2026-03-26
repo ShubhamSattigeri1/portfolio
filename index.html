@@ -415,7 +415,7 @@
         <aside class="hero-card">
           <h3>Quick snapshot</h3>
           <div class="stat-row"><span>Best for</span><strong>Students and job seekers</strong></div>
-          <div class="stat-row"><span>Profile fields</span><strong>7 core details</strong></div>
+          <div class="stat-row"><span>Profile fields</span><strong>6 core details + optional phone</strong></div>
           <div class="stat-row"><span>Storage model</span><strong>No server database</strong></div>
           <div class="stat-row"><span>Use cases</span><strong>Resume, badge, portfolio</strong></div>
           <div class="tagline">The generated link opens a simple profile page that can be viewed on most phones and desktops.</div>
@@ -449,8 +449,8 @@
                     <span class="errmsg" id="e-surname"></span>
                   </div>
                   <div class="field">
-                    <label for="f-mobile">Mobile number</label>
-                    <input id="f-mobile" placeholder="xxxxxxxxx" inputmode="numeric" oninput="livePreview()" />
+                    <label for="f-mobile">Mobile number (optional)</label>
+                    <input id="f-mobile" placeholder="+91 98765 43210" inputmode="tel" oninput="livePreview()" />
                     <span class="errmsg" id="e-mobile"></span>
                   </div>
                   <div class="field">
@@ -479,6 +479,7 @@
                   <button class="btn btn-primary" onclick="generate()">Generate QR</button>
                   <button class="btn btn-ghost" onclick="resetAll()">Reset</button>
                 </div>
+                <div class="subnote">Only include a phone number if you want it to appear publicly in the generated link and profile page.</div>
                 <div id="status"></div>
               </div>
 
@@ -500,12 +501,12 @@
                     <div class="qr-actions">
                       <button class="btn btn-secondary" onclick="showProfile()">Preview profile page</button>
                       <a class="btn btn-ghost" id="qr-download" download="portfolio-qr.png">Download QR</a>
-                      <a class="btn btn-ghost" id="qr-open" target="_blank" rel="noreferrer">Open profile URL</a>
+                      <a class="btn btn-ghost" id="qr-open" target="_blank" rel="noopener noreferrer">Open profile URL</a>
                     </div>
                     <div class="link-box" id="qr-link"></div>
                   </div>
                 </div>
-                <div class="subnote">Tip: include this QR on a resume, student ID project board, event badge, or printed portfolio handout.</div>
+                <div class="subnote">Tip: include this QR on a resume, student ID project board, event badge, or printed portfolio handout after reviewing the exact destination URL.</div>
               </aside>
             </div>
           </div>
@@ -519,7 +520,8 @@
               <div class="profile-field" id="pv-github"></div>
               <div class="profile-field" id="pv-linkedin"></div>
               <div class="profile-actions">
-                <a class="btn btn-primary" id="pv-wa" target="_blank" rel="noreferrer">WhatsApp me</a>
+                <a class="btn btn-primary" id="pv-open-github" target="_blank" rel="noopener noreferrer">Open GitHub</a>
+                <a class="btn btn-secondary" id="pv-open-linkedin" target="_blank" rel="noopener noreferrer">Open LinkedIn</a>
                 <button class="btn btn-ghost" onclick="backToForm()">Back</button>
               </div>
             </div>
@@ -537,7 +539,7 @@
           <div class="content-grid">
             <article class="info-card">
               <h3>What gets included</h3>
-              <p>Your first name, surname, mobile number, college, city, GitHub URL, and LinkedIn URL are placed into the generated link.</p>
+              <p>Your first name, surname, college, city, GitHub URL, LinkedIn URL, and an optional phone number are placed into the generated link.</p>
               <ul>
                 <li>Best for short public profile details</li>
                 <li>Works without sign-up or account creation</li>
@@ -607,6 +609,7 @@
             <p>
               To use the tool well, start by entering only the information that belongs in a public portfolio context. Your name, city, college, GitHub profile, and LinkedIn profile are usually enough for a first impression.
               The best results usually come from short, accurate inputs rather than stuffing every possible detail into the form. A QR code is supposed to reduce friction, not create more clutter.
+              A phone number should be treated as optional because it becomes part of the public link if you include it.
               Once the profile looks correct in the preview, generate the QR code, download it, and test it on a phone before adding it to a resume, business card, event badge, project poster, or printed portfolio sheet.
             </p>
             <p>
@@ -725,7 +728,7 @@
             </article>
             <article class="faq-item">
               <h3>Does the site store my details in a database?</h3>
-              <p>No database is used in this page. Your data is encoded into the generated link, so only share information you are comfortable making public.</p>
+              <p>No database is used in this page. Your data is encoded into the generated link, so only share information you are comfortable making public. Social links are also restricted to GitHub and LinkedIn domains to reduce deceptive link abuse.</p>
             </article>
             <article class="faq-item">
               <h3>What kind of content should I publish next?</h3>
@@ -762,10 +765,11 @@
             </article>
             <aside class="info-card policy-box">
               <h3>Privacy and usage notes</h3>
-              <p>This page is intended for public profile sharing. Please do not use it for private or sensitive information.</p>
+              <p>This page is intended for public profile sharing. Please do not use it for private or sensitive information, and treat any optional phone number as public if you include it.</p>
               <ul>
                 <li>Only share details you are comfortable publishing.</li>
                 <li>Review external links before distributing your QR code.</li>
+                <li>Use only real GitHub and LinkedIn profile URLs.</li>
                 <li>Update or regenerate the QR when your public profiles change.</li>
               </ul>
               <div class="policy-links">
@@ -782,7 +786,7 @@
       <footer class="section">
         <div class="footer-card">
           <p>Portfolio QR Generator combines a resume-ready QR tool with original educational content, trust pages, and policy guidance for students and developers.</p>
-          <p><a href="guides.html">Guides</a> · <a href="about.html">About</a> · <a href="contact.html">Contact</a> · <a href="privacy-policy.html">Privacy Policy</a> · <a href="terms-of-service.html">Terms of Service</a></p>
+          <p><a href="guides.html">Guides</a> | <a href="about.html">About</a> | <a href="contact.html">Contact</a> | <a href="privacy-policy.html">Privacy Policy</a> | <a href="terms-of-service.html">Terms of Service</a></p>
         </div>
       </footer>
     </div>
@@ -791,6 +795,16 @@
   <script>
     const BASE_URL = "https://portfolio-qr-code-generator.vercel.app";
     const FIELDS = ["name", "surname", "mobile", "college", "city", "github", "linkedin"];
+    const REQUIRED_FIELDS = ["name", "surname", "college", "city", "github", "linkedin"];
+    const MAX_LENGTHS = {
+      name: 60,
+      surname: 60,
+      mobile: 20,
+      college: 120,
+      city: 80,
+      github: 200,
+      linkedin: 200
+    };
 
     function val(id) { return document.getElementById("f-" + id).value.trim(); }
     function $id(id) { return document.getElementById(id); }
@@ -798,6 +812,10 @@
     function normalizeUrl(v) {
       if (!v) return "";
       return /^https?:\/\//i.test(v) ? v : "https://" + v;
+    }
+
+    function cleanText(v, maxLength) {
+      return (v || "").replace(/[\u0000-\u001f\u007f]/g, "").trim().slice(0, maxLength);
     }
 
     function isValidUrl(v) {
@@ -809,9 +827,32 @@
       }
     }
 
+    function isAllowedProfileUrl(v, allowedDomain) {
+      if (!isValidUrl(v)) return false;
+      const url = new URL(v);
+      if (!/^https?:$/i.test(url.protocol)) return false;
+      return url.hostname === allowedDomain || url.hostname.endsWith("." + allowedDomain);
+    }
+
+    function normalizePhone(v) {
+      return cleanText(v, MAX_LENGTHS.mobile);
+    }
+
+    function buildProfileData(source = val) {
+      return {
+        name: cleanText(source("name"), MAX_LENGTHS.name),
+        surname: cleanText(source("surname"), MAX_LENGTHS.surname),
+        mobile: normalizePhone(source("mobile")),
+        college: cleanText(source("college"), MAX_LENGTHS.college),
+        city: cleanText(source("city"), MAX_LENGTHS.city),
+        github: normalizeUrl(cleanText(source("github"), MAX_LENGTHS.github)),
+        linkedin: normalizeUrl(cleanText(source("linkedin"), MAX_LENGTHS.linkedin))
+      };
+    }
+
     function livePreview() {
       $id("prev-name").textContent = (val("name") || "Your name") + (val("surname") ? " " + val("surname") : "");
-      $id("prev-mobile").textContent = "Mobile: " + (val("mobile") || "-");
+      $id("prev-mobile").textContent = "Mobile: " + (val("mobile") || "Not shared");
       $id("prev-college").textContent = "College: " + (val("college") || "-");
       $id("prev-city").textContent = "City: " + (val("city") || "-");
       $id("prev-github").textContent = "GitHub: " + (val("github") || "github.com/username");
@@ -833,22 +874,22 @@
     function validate() {
       clearErrors();
       let ok = true;
-      FIELDS.forEach((f) => {
+      REQUIRED_FIELDS.forEach((f) => {
         if (!val(f)) {
           setError(f, "Required");
           ok = false;
         }
       });
-      if (val("mobile") && !/^\d{10}$/.test(val("mobile"))) {
-        setError("mobile", "Must be exactly 10 digits");
+      if (val("mobile") && !/^[0-9+()\-\s]{7,20}$/.test(val("mobile"))) {
+        setError("mobile", "Use 7-20 digits and phone symbols only");
         ok = false;
       }
-      if (val("github") && !isValidUrl(normalizeUrl(val("github")))) {
-        setError("github", "Enter a valid URL");
+      if (val("github") && !isAllowedProfileUrl(normalizeUrl(val("github")), "github.com")) {
+        setError("github", "Use a valid github.com profile URL");
         ok = false;
       }
-      if (val("linkedin") && !isValidUrl(normalizeUrl(val("linkedin")))) {
-        setError("linkedin", "Enter a valid URL");
+      if (val("linkedin") && !isAllowedProfileUrl(normalizeUrl(val("linkedin")), "linkedin.com")) {
+        setError("linkedin", "Use a valid linkedin.com profile URL");
         ok = false;
       }
       return ok;
@@ -860,16 +901,12 @@
         setStatus("Please fix the highlighted fields.");
         return;
       }
-      const data = {
-        name: val("name"),
-        surname: val("surname"),
-        mobile: val("mobile"),
-        college: val("college"),
-        city: val("city"),
-        github: normalizeUrl(val("github")),
-        linkedin: normalizeUrl(val("linkedin"))
-      };
-      const fullUrl = BASE_URL + "?" + new URLSearchParams(data).toString();
+      const data = buildProfileData();
+      const params = new URLSearchParams();
+      Object.entries(data).forEach(([key, value]) => {
+        if (value) params.set(key, value);
+      });
+      const fullUrl = BASE_URL + "?" + params.toString();
       const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&bgcolor=ffffff&color=0b1117&data=" + encodeURIComponent(fullUrl);
 
       $id("qr-img").src = qrUrl;
@@ -906,31 +943,47 @@
       $id("form-view").style.display = "block";
     }
 
+    function setProfileLink(containerId, label, href) {
+      const container = $id(containerId);
+      container.textContent = label + ": ";
+      if (!href) {
+        container.appendChild(document.createTextNode("Not shared"));
+        return;
+      }
+      const link = document.createElement("a");
+      link.href = href;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = href;
+      container.appendChild(link);
+    }
+
     function populateProfile(d) {
-      const gh = normalizeUrl(d.github);
-      const li = normalizeUrl(d.linkedin);
-      const wa = "https://wa.me/91" + d.mobile + "?text=" + encodeURIComponent("Hi " + d.name + " " + d.surname + ", I scanned your QR.");
-      $id("pv-name").textContent = d.name + " " + d.surname;
-      $id("pv-mobile").textContent = "Mobile: " + d.mobile;
+      const gh = isAllowedProfileUrl(normalizeUrl(d.github), "github.com") ? normalizeUrl(d.github) : "";
+      const li = isAllowedProfileUrl(normalizeUrl(d.linkedin), "linkedin.com") ? normalizeUrl(d.linkedin) : "";
+      const phone = normalizePhone(d.mobile);
+      $id("pv-name").textContent = (d.name + " " + d.surname).trim();
+      $id("pv-mobile").textContent = "Mobile: " + (phone || "Not shared");
       $id("pv-college").textContent = "College: " + d.college;
       $id("pv-city").textContent = "City: " + d.city;
-      $id("pv-github").innerHTML = 'GitHub: <a href="' + gh + '" target="_blank" rel="noreferrer">' + gh + "</a>";
-      $id("pv-linkedin").innerHTML = 'LinkedIn: <a href="' + li + '" target="_blank" rel="noreferrer">' + li + "</a>";
-      $id("pv-wa").href = wa;
+      setProfileLink("pv-github", "GitHub", gh);
+      setProfileLink("pv-linkedin", "LinkedIn", li);
+      $id("pv-open-github").href = gh || "#";
+      $id("pv-open-github").setAttribute("aria-disabled", gh ? "false" : "true");
+      $id("pv-open-github").tabIndex = gh ? 0 : -1;
+      $id("pv-open-github").style.pointerEvents = gh ? "auto" : "none";
+      $id("pv-open-github").style.opacity = gh ? "1" : "0.55";
+      $id("pv-open-linkedin").href = li || "#";
+      $id("pv-open-linkedin").setAttribute("aria-disabled", li ? "false" : "true");
+      $id("pv-open-linkedin").tabIndex = li ? 0 : -1;
+      $id("pv-open-linkedin").style.pointerEvents = li ? "auto" : "none";
+      $id("pv-open-linkedin").style.opacity = li ? "1" : "0.55";
     }
 
     (function () {
       const p = new URLSearchParams(window.location.search);
       if (p.get("name")) {
-        const d = {
-          name: p.get("name") || "",
-          surname: p.get("surname") || "",
-          mobile: p.get("mobile") || "",
-          college: p.get("college") || "",
-          city: p.get("city") || "",
-          github: normalizeUrl(p.get("github") || ""),
-          linkedin: normalizeUrl(p.get("linkedin") || "")
-        };
+        const d = buildProfileData((key) => p.get(key) || "");
         window._pd = d;
         populateProfile(d);
         $id("form-view").style.display = "none";
